@@ -1,8 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: '/api',
-  timeout: 60000,
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
 })
 
 export const chunkDocument = async ({ text, method, chunkSize = 300, overlap = 50 }) => {
@@ -31,7 +30,7 @@ export const compareAll = async ({ text, query, chunkSize = 300, overlap = 50, t
   const { data } = await api.post('/compare', {
     text,
     query,
-    method: 'fixed', // default, backend overrides per method
+    method: 'fixed',
     chunk_size: chunkSize,
     overlap,
     top_k: topK,
